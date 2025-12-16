@@ -1,99 +1,91 @@
-# React + TypeScript + Vite
+# Root Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Title 
 
-Currently, two official plugins are available:
+TO DO LIST WEB
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- 🖼 User interface [MUI](https://mui.com)
+- ⛳️ Icon [AntDesign Icon](https://ant.design/components/icon)
+- 🗂 Bundler [Vite](https://vitejs.dev/)
+- 🔥 Type checking [TypeScript](https://www.typescriptlang.org)
+- ✅ Strict Mode for TypeScript and React 18
+- ♻️ Type-safe environment variables with `@julr/vite-plugin-validate-env`
+- ⌨️ Form with `react-hook-form`
+- 🔖 Client state management with `@reduxjs/toolkit`
+- 🔖 Server state management with `@tanstack/react-query`
+- 📏 Linter with [ESLint](https://eslint.org)
+- 💖 Code Formatter with [Prettier](https://prettier.io)
+- 🚫 Lint-staged for running linters on Git staged files
+- 🚓 Lint git commit with Commitlint
+- 👷 Run checking on pull request with GitHub Actions
+- 💡 Absolute Imports using `@` prefix
+- 🗂 VSCode configuration: Settings, recommend extensions for ESLint, Prettier
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Requirements
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```txt
+Package manager: npm 
+Node: 20.x
+Npm  >= 10.9.2
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## How to start project
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Install necessary libraries
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-
-# React Base Project
-
-## 1. Installation
-
-Install project dependencies:
+### Install packages
 
 ```bash
-npm install
+npm --frozen-lockfile
+```
 
-Start the project in development mode: npm start 
-Create a production build: npm run build
+### Add environment variables
 
-folder structure 
-src/
-├── components/   # Reusable UI components
-├── pages/        # Application pages (route-based)
-├── hooks/        # Custom React hooks
-├── store/        # Zustand state management
-├── assets/       # Images, icons, static assets
-├── utils/        # Helper functions
-├── types/        # TypeScript type definitions
-├── styles/       # Global styles and CSS files
-├── App.tsx       # Root application component
-├── main.tsx      # Application entry point
+```bash
+cp .env.example .env
+```
+
+You must fill in this file manually. Some variables are required to start application.
+
+### Start application
+
+```bash
+npm start
+```
+
+Your application will run at `http://localhost:5173/`
+
+## How to fix errors
+
+### Linting error
+
+If that error cannot be fixed automatically with eslint package, please check ESLint [rules](https://eslint.org/docs/rules/) to fix this manually.
+
+### Commit message error
+
+If you have output similar with below
+
+```bash
+⧗   input: add important thing
+✖   subject may not be empty [subject-empty]
+✖   Commit message should include the ticket, for example ROOT-001 [ticket]
+
+✖   found 2 problems, 0 warnings
+ⓘ   Get help: https://github.com/conventional-changelog/commitlint/#what-is-commitlint
+```
+
+This error causes by [CommitLint](https://github.com/conventional-changelog/commitlint/). See below rules to fix this.
+
+#### Commit message structure
+
+ROOT-{JIRA_TICKET_NUMBER}: subject
+
+### Example
+
+```bash
+git commit -m "Update login screen" # Bad commit message ⚠️
+git commit -m "ROOT-001: Update login screen" # Violated commit message ⚠️ (subject must not be sentence-case, start-case, pascal-case, upper-case)
+git commit -m "ROOT-001: update login screen" # Good commit message ✅
+```
