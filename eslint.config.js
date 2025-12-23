@@ -11,13 +11,29 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
+  ...tseslint.configs.recommended,
+  ...reactHooks.configs.flat.recommended,
+  reactRefresh.configs.vite,
     ],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+    rules: {
+      'no-console': 'warn',             
+      'no-debugger': 'error',             
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },       
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+
+      'react-hooks/rules-of-hooks': 'error',     
+      'react-hooks/exhaustive-deps': 'warn',     
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
     },
   },
 ])

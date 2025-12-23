@@ -1,7 +1,7 @@
 {
   "name": "my-react-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "^0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,12 +12,12 @@
     "start": "vite --open"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.17",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.10.1",
-    "tailwindcss": "^4.1.17",
-    "zustand": "^5.0.9"
+    "@tailwindcss/vite": "4.1.17",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-router-dom": "7.10.1",
+    "tailwindcss": "4.1.17",
+    "zustand": "5.0.9"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
