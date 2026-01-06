@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useCounterStore } from '../store/useCounterStore'
+import { useCounterStore } from '../store/usecounterstore'
 
 const Home = () => {
   const [message, setMessage] = useState('Loading...')

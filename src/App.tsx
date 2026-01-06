@@ -1,13 +1,15 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 
-import Header from "./components/Header";
-import AppRouter from "./routes/AppRoutes";
+import Header from './components/header';
+import AppRouter from './routes/approutes';
+import TodoList from './components/addtodo';
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
       <AppRouter />
+      <TodoList />
     </BrowserRouter>
   );
 }
