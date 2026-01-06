@@ -1,5 +1,15 @@
 import { useEffect, useState } from 'react';
 import { addTodo, deleteTodo, getTodos } from '../api/todoapi';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+} from '@mui/material';
 
 type Todo = {
   id: number;
@@ -35,10 +45,14 @@ export default function TodoList() {
   };
 
   return (
-    <div>
-      <h2>Todo List (Axios)</h2>
+    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
+      <Typography variant="h6" gutterBottom>
+        Todo List (Axios)
+      </Typography>
 
-      <input
+      <TextField
+        fullWidth
+        size="small"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         onKeyDown={(e) => {
@@ -48,16 +62,23 @@ export default function TodoList() {
         }}
         placeholder="Type something..."
       />
-      <button onClick={handleAdd}>Add</button>
 
-      <ul>
+      <Button fullWidth variant="contained" sx={{ mt: 1 }} onClick={handleAdd}>
+        Add
+      </Button>
+
+      <List>
         {todos.map((todo) => (
-          <li key={todo.id}>
-            {todo.title}
-            <button onClick={() => handleDelete(todo.id)}>❌</button>
-          </li>
+          <ListItem
+            key={todo.id}
+            secondaryAction={
+              <IconButton onClick={() => handleDelete(todo.id)}>❌</IconButton>
+            }
+          >
+            <ListItemText primary={todo.title} />
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Box>
   );
 }
