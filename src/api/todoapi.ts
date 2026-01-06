@@ -1,11 +1,11 @@
-import axiosClient from "./axiosclient";
+import axiosClient from './axiosclient';
 
 export const getTodos = () => {
-  return axiosClient.get("/todos?_limit=5");
+  return axiosClient.get('/todos?_limit=5');
 };
 
 export const addTodo = (title: string) => {
-  return axiosClient.post("/todos", {
+  return axiosClient.post('/todos', {
     title,
     completed: false,
   });

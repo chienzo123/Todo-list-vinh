@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
-import { useCounterStore } from '../store/usecounterstore'
+import { useEffect, useState } from 'react';
+import { useCounterStore } from '../store/usecounterstore';
 
 const Home = () => {
-  const [message, setMessage] = useState('Loading...')
-  const { count, increase, decrease } = useCounterStore()
+  const [message, setMessage] = useState('Loading...');
+  const { count, increase, decrease } = useCounterStore();
 
   useEffect(() => {
     setTimeout(() => {
-      setMessage('Hello World')
-    }, 500)
-  }, [])
+      setMessage('Hello World');
+    }, 500);
+  }, []);
 
   return (
     <div className="p-6 space-y-4">
@@ -32,7 +32,7 @@ const Home = () => {
         Decrease
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
