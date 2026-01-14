@@ -10,6 +10,12 @@ const Header = () => {
       <Link to="/about" className="hover:text-green-400 font-semibold">
         About
       </Link>
+      <Link to="/register" className="hover:text-green-400 font-semibold">
+        Register
+      </Link>
+      <Link to="/login" className="hover:text-green-400 font-semibold">
+        Login
+      </Link>
     </header>
   );
 };
