@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 
-import Header from './components/auth/header';
+import Header from './components/header';
 import AppRouter from './pages/routes/approutes';
 
 function App() {

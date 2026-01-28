@@ -1,27 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ErrorComponent from '../../components/errors/errors';
-
-type LoginData = {
-  email: string;
-  password: string;
-};
-
-const validate = (data: LoginData) => {
-  const errors: Partial<Record<keyof LoginData, string>> = {};
-
-  if (!data.email) {
-    errors.email = 'Email is required';
-  } else if (!/^\S+@\S+\.\S+$/.test(data.email)) {
-    errors.email = 'Enter a valid email';
-  }
-
-  if (!data.password) {
-    errors.password = 'Password is required';
-  }
-
-  return errors;
-};
+import {
+  Container,
+  Paper,
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Alert,
+} from '@mui/material';
+import { validateLogin, type LoginData } from '../../utils/validation';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -30,6 +18,14 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
+
+  // Check if token exists in localStorage and redirect to home
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/home', { replace: true });
+    }
+  }, [navigate]);
 
   const [errors, setErrors] = useState<
     Partial<Record<keyof LoginData, string>>
@@ -46,20 +42,20 @@ const LoginForm = () => {
 
     const updated = { ...formData, [name]: value } as LoginData;
     setFormData(updated);
-    setErrors(validate(updated));
+    setErrors(validateLogin(updated));
   };
 
   const onBlurHandler = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     setTouched((t) => ({ ...t, [name]: true }));
-    setErrors(validate(formData));
+    setErrors(validateLogin(formData));
   };
 
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
 
     setTouched({ email: true, password: true });
-    const validationErrors = validate(formData);
+    const validationErrors = validateLogin(formData);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
@@ -72,62 +68,102 @@ const LoginForm = () => {
     navigate('/home', { replace: true });
   };
 
-  const isValid = Object.keys(validate(formData)).length === 0;
+  const isValid = Object.keys(validateLogin(formData)).length === 0;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          Login
-        </h2>
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+        }}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 4,
+            width: '100%',
+            borderRadius: 2,
+          }}
+        >
+          <Typography
+            variant="h4"
+            component="h2"
+            sx={{
+              textAlign: 'center',
+              marginBottom: 3,
+              fontWeight: 'bold',
+              color: '#1976d2',
+            }}
+          >
+            Login
+          </Typography>
 
-        {formError && (
-          <div className="mb-4">
-            <ErrorComponent message={formError} />
-          </div>
-        )}
+          {formError && (
+            <Alert severity="error" sx={{ marginBottom: 2 }}>
+              {formError}
+            </Alert>
+          )}
 
-        <form className="space-y-4" onSubmit={onSubmitHandler} noValidate>
-          <div>
-            <input
+          <Box component="form" onSubmit={onSubmitHandler} noValidate>
+            <TextField
+              fullWidth
               name="email"
+              label="Email"
+              type="email"
               value={formData.email}
               onChange={onChangeHandler}
               onBlur={onBlurHandler}
-              className="w-full px-4 py-3 border border-gray-200 rounded"
-              type="email"
+              error={touched.email && !!errors.email}
+              helperText={touched.email && errors.email}
+              margin="normal"
               placeholder="Enter your email"
+              variant="outlined"
             />
-            {touched.email && errors.email && (
-              <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-            )}
-          </div>
 
-          <div>
-            <input
+            <TextField
+              fullWidth
               name="password"
+              label="Password"
+              type="password"
               value={formData.password}
               onChange={onChangeHandler}
               onBlur={onBlurHandler}
-              className="w-full px-4 py-3 border border-gray-200 rounded"
-              type="password"
+              error={touched.password && !!errors.password}
+              helperText={touched.password && errors.password}
+              margin="normal"
               placeholder="Enter your password"
+              variant="outlined"
             />
-            {touched.password && errors.password && (
-              <p className="mt-1 text-sm text-red-500">{errors.password}</p>
-            )}
-          </div>
 
-          <button
-            type="submit"
-            disabled={!isValid}
-            className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700 transition disabled:opacity-50"
-          >
-            Login
-          </button>
-        </form>
-      </div>
-    </div>
+            <Button
+              type="submit"
+              fullWidth
+              disabled={!isValid}
+              variant="contained"
+              sx={{
+                marginTop: 3,
+                padding: '10px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                backgroundColor: '#1976d2',
+                '&:hover': {
+                  backgroundColor: '#1565c0',
+                },
+                '&:disabled': {
+                  opacity: 0.5,
+                  cursor: 'not-allowed',
+                },
+              }}
+            >
+              Login
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    </Container>
   );
 };
 

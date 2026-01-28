@@ -1,15 +1,18 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import ErrorMsg from '../errors/errors';
-
-type RegisterFormValues = {
-  firstName?: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+import {
+  Container,
+  Paper,
+  TextField,
+  Button,
+  Box,
+  Typography,
+} from '@mui/material';
+import {
+  registerValidationRules,
+  type RegisterFormValues,
+} from '../../utils/validation';
 
 const Register = () => {
   const {
@@ -36,100 +39,121 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          Register
-        </h2>
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          {/* First Name (optional) */}
-          <div>
-            <input
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+        }}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 4,
+            width: '100%',
+            borderRadius: 2,
+          }}
+        >
+          <Typography
+            variant="h4"
+            component="h2"
+            sx={{
+              textAlign: 'center',
+              marginBottom: 3,
+              fontWeight: 'bold',
+              color: '#1976d2',
+            }}
+          >
+            Register
+          </Typography>
+
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <TextField
+              fullWidth
+              label="First Name (optional)"
               type="text"
               placeholder="First Name (optional)"
-              className="border p-2 w-full rounded"
-              {...register('firstName', {
-                minLength: {
-                  value: 2,
-                  message: 'First name must be at least 2 characters',
-                },
-              })}
+              error={!!errors.firstName}
+              helperText={errors.firstName?.message}
+              margin="normal"
+              variant="outlined"
+              {...register('firstName', registerValidationRules.firstName)}
             />
-            <ErrorMsg message={errors.firstName?.message} />
-          </div>
 
-          {/* Last Name */}
-          <div>
-            <input
+            <TextField
+              fullWidth
+              label="Last Name"
               type="text"
               placeholder="Last Name"
-              className="border p-2 w-full rounded"
-              {...register('lastName', {
-                required: 'Last name is required',
-                minLength: {
-                  value: 2,
-                  message: 'Last name must be at least 2 characters',
-                },
-              })}
+              error={!!errors.lastName}
+              helperText={errors.lastName?.message}
+              margin="normal"
+              variant="outlined"
+              {...register('lastName', registerValidationRules.lastName)}
             />
-            <ErrorMsg message={errors.lastName?.message} />
-          </div>
 
-          {/* Email */}
-          <div>
-            <input
+            <TextField
+              fullWidth
+              label="Email"
               type="email"
               placeholder="Email"
-              className="border p-2 w-full rounded"
-              {...register('email', {
-                required: 'Email is required',
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: 'Invalid email format',
-                },
-              })}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+              margin="normal"
+              variant="outlined"
+              {...register('email', registerValidationRules.email)}
             />
-            <ErrorMsg message={errors.email?.message} />
-          </div>
 
-          {/* Password */}
-          <div>
-            <input
+            <TextField
+              fullWidth
+              label="Password"
               type="password"
               placeholder="Password"
-              className="border p-2 w-full rounded"
-              {...register('password', {
-                required: 'Password is required',
-                minLength: {
-                  value: 6,
-                  message: 'Password must be at least 6 characters',
-                },
-              })}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              margin="normal"
+              variant="outlined"
+              {...register('password', registerValidationRules.password)}
             />
-            <ErrorMsg message={errors.password?.message} />
-          </div>
 
-          {/* Confirm Password */}
-          <div>
-            <input
+            <TextField
+              fullWidth
+              label="Confirm Password"
               type="password"
               placeholder="Confirm Password"
-              className="border p-2 w-full rounded"
-              {...register('confirmPassword', {
-                required: 'Confirm password is required',
-                validate: (value) =>
-                  value === passwordValue || 'Passwords do not match',
-              })}
+              error={!!errors.confirmPassword}
+              helperText={errors.confirmPassword?.message}
+              margin="normal"
+              variant="outlined"
+              {...register(
+                'confirmPassword',
+                registerValidationRules.confirmPassword(passwordValue),
+              )}
             />
-            <ErrorMsg message={errors.confirmPassword?.message} />
-          </div>
 
-          <button className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700 transition-colors">
-            Register
-          </button>
-        </form>
-      </div>
-    </div>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                marginTop: 3,
+                padding: '10px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                backgroundColor: '#1976d2',
+                '&:hover': {
+                  backgroundColor: '#1565c0',
+                },
+              }}
+            >
+              Register
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    </Container>
   );
 };
 
