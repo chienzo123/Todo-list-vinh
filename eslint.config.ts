@@ -5,6 +5,11 @@ import pluginReact from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export default tseslint.config(
   {
@@ -19,6 +24,7 @@ export default tseslint.config(
       globals: globals.browser,
       parserOptions: {
         project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: __dirname,
       },
     },
     settings: {
@@ -47,5 +53,5 @@ export default tseslint.config(
       ],
     },
   },
-  eslintConfigPrettier
+  eslintConfigPrettier,
 );

@@ -1,5 +1,4 @@
-
-## Title 
+## Title
 
 TO DO LIST WEB
 
@@ -25,7 +24,7 @@ TO DO LIST WEB
 ## Requirements
 
 ```txt
-Package manager: npm 
+Package manager: npm
 Node: 20.x
 Npm  >= 10.9.2
 ```
