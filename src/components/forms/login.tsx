@@ -20,11 +20,13 @@ const LoginForm = () => {
   });
 
   // Check if token exists in localStorage and redirect to home
+  // NOTE: we intentionally do not auto-redirect on mount so user
+  // can navigate back to the login page even when a token exists.
+  // If you want to enforce redirect for authenticated users,
+  // re-enable the check below.
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/home', { replace: true });
-    }
+    if (token) navigate('/home', { replace: true });
   }, [navigate]);
 
   const [errors, setErrors] = useState<
@@ -63,9 +65,24 @@ const LoginForm = () => {
       return;
     }
 
-    //  navigate to home
-    setFormError(null);
-    navigate('/home', { replace: true });
+    // Check credentials: email must be vinhdepzai and password must be 123456
+    if (
+      formData.email === 'vkd28@drexel.edu' &&
+      formData.password === '123456'
+    ) {
+      // Create fake token
+      const fakeToken =
+        'fake_token_' +
+        Date.now() +
+        '_' +
+        Math.random().toString(36).substring(7);
+      localStorage.setItem('token', fakeToken);
+      setFormError(null);
+      // navigate normally (do not replace history) so user can go back to login
+      navigate('/home');
+    } else {
+      setFormError('Invalid credentials. Please use vkd28@drexel.edu / 123456');
+    }
   };
 
   const isValid = Object.keys(validateLogin(formData)).length === 0;
