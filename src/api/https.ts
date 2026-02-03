@@ -21,7 +21,7 @@ https.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor
@@ -42,7 +42,7 @@ https.interceptors.response.use(
       console.error('Error:', error.message);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default https;
